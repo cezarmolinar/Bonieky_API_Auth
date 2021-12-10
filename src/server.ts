@@ -2,7 +2,6 @@ import express, { Request, Response, ErrorRequestHandler } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { MulterError } from 'multer';
 
 import apiRoutes from './routes/api';
 
@@ -24,13 +23,9 @@ server.use((req: Request, res: Response) => {
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     res.status(400);
-    if (err instanceof MulterError) {
-        res.json({ error: err.code });
-    } else {
-        console.log(err);
-        res.json({ error: 'Ocorreu um erro' });
-    }
+    console.log(err);
 }
+
 server.use(errorHandler);
 
 server.listen(process.env.PORT);
